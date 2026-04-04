@@ -6,11 +6,31 @@ export function initEstatisticas(statsData) {
   if (!statsData) return;
 
   initTabs(statsData);
-  // Show the most recent year by default
-  const years = Object.keys(statsData).filter(k => /^\d{4}$/.test(k)).sort();
-  renderYear(statsData, years[years.length - 1] || '2026');
+  // Show All Time by default
+  renderYear(statsData, 'allTime');
   initBarAnimations();
   initPlayerLookup(statsData);
+
+  // Blur current year stats to hide prize data
+  const currentYear = String(new Date().getFullYear());
+  const currentYearContent = document.querySelector(
+    `.estatisticas__content[data-year="${currentYear}"]`
+  );
+  if (currentYearContent) {
+    currentYearContent.classList.add('estatisticas__content--blurred');
+    const overlay = document.createElement('div');
+    overlay.className = 'blur-overlay';
+    overlay.innerHTML = `
+      <div class="blur-overlay__message">
+        <div class="blur-overlay__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="blur-overlay__title">Dados em sigilo</div>
+        <div class="blur-overlay__text">
+          As estatísticas de ${currentYear} serão reveladas na premiação de fim de ano.
+        </div>
+      </div>
+    `;
+    currentYearContent.appendChild(overlay);
+  }
 }
 
 function initTabs(data) {
@@ -201,26 +221,120 @@ function initPlayerLookup(statsData) {
   const input2 = document.getElementById('player-input-2');
   const dropdown1 = document.getElementById('dropdown-1');
   const dropdown2 = document.getElementById('dropdown-2');
+  const clearBtn1 = document.getElementById('clear-player-1');
+  const clearBtn2 = document.getElementById('clear-player-2');
   const results = document.querySelector('.player-lookup__results');
   const cardsContainer = document.querySelector('.player-cards');
   const chartsContainer = document.querySelector('.player-lookup__charts');
-  const granularityBtns = document.querySelectorAll('.player-lookup__granularity .filter-pill');
+  const chartModeFloat = document.getElementById('chart-mode-float');
+  const inlineControls = document.getElementById('chart-controls-inline');
+
+  // Collect ALL granularity and mode buttons (inline + float)
+  const allGranularityBtns = document.querySelectorAll('[data-granularity]');
+  const allModeBtns = document.querySelectorAll('[data-mode]');
+  const monthPickerFrom = document.getElementById('month-picker-from');
+  const monthPickerTo = document.getElementById('month-picker-to');
+  const dateFromYear = document.getElementById('date-from-year');
+  const dateToYear = document.getElementById('date-to-year');
+  const dateClear = document.getElementById('date-clear');
 
   if (!input1 || !results) return;
 
   const playerNames = Object.keys(players).sort();
 
+  // Detect date range and populate options
+  const MONTH_NAMES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+  let minDate = '9999', maxDate = '0000';
+  for (const p of Object.values(players)) {
+    for (const cat of ['gols', 'titulos', 'votos']) {
+      for (const e of (p[cat] || [])) {
+        if (e.date < minDate) minDate = e.date;
+        if (e.date > maxDate) maxDate = e.date;
+      }
+    }
+  }
+
+  // Month picker state
+  const monthPickerState = { from: '', to: '' };
+
+  function initMonthPicker(container, key) {
+    if (!container) return;
+    const trigger = container.querySelector('.month-picker__trigger');
+    const dropdown = container.querySelector('.month-picker__dropdown');
+
+    // Populate grid
+    dropdown.innerHTML = MONTH_NAMES.map((m, i) => {
+      const val = String(i + 1).padStart(2, '0');
+      return `<button class="month-picker__item" type="button" data-value="${val}">${m}</button>`;
+    }).join('');
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Close any other open picker
+      document.querySelectorAll('.month-picker.open').forEach(p => {
+        if (p !== container) p.classList.remove('open');
+      });
+      container.classList.toggle('open');
+    });
+
+    dropdown.addEventListener('click', (e) => {
+      const item = e.target.closest('.month-picker__item');
+      if (!item) return;
+      const val = item.dataset.value;
+      // Toggle: clicking same month deselects
+      if (monthPickerState[key] === val) {
+        monthPickerState[key] = '';
+        trigger.textContent = '--';
+        trigger.classList.remove('has-value');
+        dropdown.querySelectorAll('.month-picker__item').forEach(i => i.classList.remove('active'));
+      } else {
+        monthPickerState[key] = val;
+        trigger.textContent = MONTH_NAMES[parseInt(val) - 1];
+        trigger.classList.add('has-value');
+        dropdown.querySelectorAll('.month-picker__item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      }
+      container.classList.remove('open');
+      update();
+    });
+  }
+
+  initMonthPicker(monthPickerFrom, 'from');
+  initMonthPicker(monthPickerTo, 'to');
+
+  // Close month pickers on outside click
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.month-picker.open').forEach(p => p.classList.remove('open'));
+  });
+
+  // Populate year selects
+  if (minDate !== '9999') {
+    const minYear = parseInt(minDate.substring(0, 4));
+    const maxYear = parseInt(maxDate.substring(0, 4));
+    const yearOptions = [];
+    for (let y = minYear; y <= maxYear; y++) {
+      yearOptions.push(`<option value="${y}">${y}</option>`);
+    }
+    const yearHtml = yearOptions.join('');
+    [dateFromYear, dateToYear].forEach(s => { s.innerHTML = '<option value="" hidden>--</option>' + yearHtml; });
+  }
+
   let currentPlayer1 = null;
   let currentPlayer2 = null;
-  let currentGranularity = 'allTime';
+  let currentGranularity = 'month';
+  let currentMode = 'individual';
+
+  function normalize(str) {
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 
   function findPlayer(val) {
     if (!val) return null;
-    const lower = val.toLowerCase();
-    const exact = playerNames.find(n => n.toLowerCase() === lower);
+    const norm = normalize(val);
+    const exact = playerNames.find(n => normalize(n) === norm);
     if (exact) return exact;
     if (val.length >= 2) {
-      const partial = playerNames.find(n => n.toLowerCase().startsWith(lower));
+      const partial = playerNames.find(n => normalize(n).startsWith(norm));
       if (partial) return partial;
     }
     return null;
@@ -228,13 +342,14 @@ function initPlayerLookup(statsData) {
 
   function filterNames(query) {
     if (!query || query.length < 1) return [];
-    const lower = query.toLowerCase();
-    return playerNames.filter(n => n.toLowerCase().includes(lower)).slice(0, 8);
+    const norm = normalize(query);
+    return playerNames.filter(n => normalize(n).includes(norm)).slice(0, 8);
   }
 
   function highlightMatch(name, query) {
-    const lower = name.toLowerCase();
-    const idx = lower.indexOf(query.toLowerCase());
+    const normName = normalize(name);
+    const normQuery = normalize(query);
+    const idx = normName.indexOf(normQuery);
     if (idx === -1) return name;
     return name.substring(0, idx) + '<mark>' + name.substring(idx, idx + query.length) + '</mark>' + name.substring(idx + query.length);
   }
@@ -288,24 +403,30 @@ function initPlayerLookup(statsData) {
     });
   }
 
+  function getDateRange() {
+    const fy = dateFromYear?.value;
+    const fm = monthPickerState.from;
+    const ty = dateToYear?.value;
+    const tm = monthPickerState.to;
+    const from = fy ? `${fy}-${fm || '01'}` : null;
+    const to = ty ? `${ty}-${tm || '12'}` : null;
+    return { from, to };
+  }
+
   function update() {
     if (!currentPlayer1) {
       results.style.display = 'none';
+      if (chartModeFloat) chartModeFloat.classList.remove('visible');
       return;
     }
 
     results.style.display = '';
     const isCompare = !!currentPlayer2;
-    const isAllTime = currentGranularity === 'allTime';
+    const range = getDateRange();
 
-    renderPlayerCards(cardsContainer, players, currentPlayer1, currentPlayer2, isCompare);
-
-    if (isAllTime) {
-      chartsContainer.style.display = 'none';
-    } else {
-      chartsContainer.style.display = '';
-      renderLookupCharts(players, currentPlayer1, currentPlayer2, currentGranularity);
-    }
+    renderPlayerCards(cardsContainer, players, currentPlayer1, currentPlayer2, isCompare, range);
+    chartsContainer.style.display = '';
+    renderLookupCharts(players, currentPlayer1, currentPlayer2, currentGranularity, currentMode === 'cumulative', range);
   }
 
   setupAutocomplete(input1, dropdown1, (name) => {
@@ -318,19 +439,120 @@ function initPlayerLookup(statsData) {
     update();
   });
 
-  // Granularity buttons
-  granularityBtns.forEach(btn => {
+  // Clear player buttons
+  if (clearBtn1) clearBtn1.addEventListener('click', () => {
+    input1.value = '';
+    currentPlayer1 = null;
+    update();
+  });
+  if (clearBtn2) clearBtn2.addEventListener('click', () => {
+    input2.value = '';
+    currentPlayer2 = null;
+    update();
+  });
+
+  // Sync all granularity/mode buttons across inline, float, and top bar
+  function syncGranularity() {
+    allGranularityBtns.forEach(b => b.classList.toggle('active', b.dataset.granularity === currentGranularity));
+  }
+  function syncMode() {
+    allModeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === currentMode));
+  }
+  syncGranularity();
+  syncMode();
+
+  function syncAll() { syncGranularity(); syncMode(); }
+
+  // Granularity buttons (all instances)
+  allGranularityBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      granularityBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
       currentGranularity = btn.dataset.granularity;
+      syncAll();
       update();
     });
   });
+
+  // Mode buttons (all instances)
+  allModeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentMode = btn.dataset.mode;
+      syncAll();
+      update();
+    });
+  });
+
+  // Date range year selects
+  [dateFromYear, dateToYear].forEach(el => {
+    if (el) el.addEventListener('change', () => {
+      el.style.color = el.value ? 'var(--text-primary)' : '';
+      update();
+    });
+  });
+
+
+  // Clear date range
+  if (dateClear) dateClear.addEventListener('click', () => {
+    [dateFromYear, dateToYear].forEach(el => { el.value = ''; el.style.color = ''; });
+    monthPickerState.from = '';
+    monthPickerState.to = '';
+    document.querySelectorAll('.month-picker__trigger').forEach(t => {
+      t.textContent = '--';
+      t.classList.remove('has-value');
+    });
+    document.querySelectorAll('.month-picker__item.active').forEach(i => i.classList.remove('active'));
+    update();
+  });
+
+  // Show floating bar only when charts visible but inline controls scrolled out
+  if (chartModeFloat && chartsContainer && inlineControls) {
+    let chartsInView = false;
+    let inlineInView = false;
+
+    const chartsObs = new IntersectionObserver(([e]) => {
+      chartsInView = e.isIntersecting;
+      updateFloat();
+    }, { threshold: 0.05 });
+
+    const inlineObs = new IntersectionObserver(([e]) => {
+      inlineInView = e.isIntersecting;
+      updateFloat();
+    }, { threshold: 0.1 });
+
+    function updateFloat() {
+      const show = chartsInView && !inlineInView && currentPlayer1;
+      chartModeFloat.classList.toggle('visible', !!show);
+    }
+
+    chartsObs.observe(chartsContainer);
+    inlineObs.observe(inlineControls);
+  }
 }
 
-function getPlayerTotals(playerData) {
-  const sum = arr => (arr || []).reduce((s, e) => s + e.value, 0);
+const CURRENT_YEAR = String(new Date().getFullYear());
+
+function filterByRange(entries, range) {
+  if (!range) return entries;
+  const from = range.from ? range.from + '-01' : null;
+  // Last day of the "to" month: use first day of next month
+  const to = range.to ? nextMonth(range.to) : null;
+  return entries.filter(e => {
+    if (from && e.date < from) return false;
+    if (to && e.date >= to) return false;
+    return true;
+  });
+}
+
+function nextMonth(ym) {
+  const [y, m] = ym.split('-').map(Number);
+  if (m === 12) return `${y + 1}-01-01`;
+  return `${y}-${String(m + 1).padStart(2, '0')}-01`;
+}
+
+function getPlayerTotals(playerData, excludeYear, range) {
+  const sum = arr => filterByRange(
+    (arr || []).filter(e => !excludeYear || !e.date.startsWith(excludeYear)),
+    range
+  ).reduce((s, e) => s + e.value, 0);
   return {
     gols: sum(playerData.gols),
     titulos: sum(playerData.titulos),
@@ -338,9 +560,9 @@ function getPlayerTotals(playerData) {
   };
 }
 
-function renderPlayerCards(container, allPlayers, name1, name2, isCompare) {
+function renderPlayerCards(container, allPlayers, name1, name2, isCompare, range) {
   const p1 = allPlayers[name1];
-  const totals1 = getPlayerTotals(p1);
+  const totals1 = getPlayerTotals(p1, CURRENT_YEAR, range);
 
   container.className = isCompare ? 'player-cards player-cards--compare' : 'player-cards';
 
@@ -348,7 +570,7 @@ function renderPlayerCards(container, allPlayers, name1, name2, isCompare) {
     container.innerHTML = buildPlayerCard(name1, totals1);
   } else {
     const p2 = allPlayers[name2];
-    const totals2 = getPlayerTotals(p2);
+    const totals2 = getPlayerTotals(p2, CURRENT_YEAR, range);
     const maxVals = {
       gols: Math.max(totals1.gols, totals2.gols) || 1,
       titulos: Math.max(totals1.titulos, totals2.titulos) || 1,
@@ -413,7 +635,20 @@ function buildCompareBar(label, value, maxValue, color) {
   `;
 }
 
-function renderLookupCharts(allPlayers, name1, name2, granularity) {
+function toCumulative(data) {
+  let sum = 0;
+  return data.map(d => ({ label: d.label, sortKey: d.sortKey, value: (sum += d.value) }));
+}
+
+function fillCumulative(labels, valueMap) {
+  let last = null;
+  return labels.map(l => {
+    if (valueMap[l] != null) last = valueMap[l];
+    return last;
+  });
+}
+
+function renderLookupCharts(allPlayers, name1, name2, granularity, cumulative, range) {
   const categories = ['gols', 'titulos', 'votos'];
   const colors = {
     gols: { border: '#e91e8c', bg: 'rgba(233, 30, 140, 0.15)' },
@@ -431,8 +666,12 @@ function renderLookupCharts(allPlayers, name1, name2, granularity) {
 
   categories.forEach(cat => {
     const canvasId = `chart-${cat}`;
-    const raw1 = p1[cat] || [];
-    const agg1 = aggregateData(raw1, granularity);
+    const raw1 = filterByRange((p1[cat] || []).filter(e => !e.date.startsWith(CURRENT_YEAR)), range);
+    const agg1Raw = aggregateData(raw1, granularity);
+    const agg1 = cumulative ? toCumulative(agg1Raw) : agg1Raw;
+
+    const numPoints = agg1.length;
+    const showPoints = numPoints <= 15;
 
     const datasets = [{
       label: name1,
@@ -440,42 +679,57 @@ function renderLookupCharts(allPlayers, name1, name2, granularity) {
       borderColor: colors[cat].border,
       backgroundColor: colors[cat].bg,
       borderWidth: 2,
-      fill: !p2,
+      fill: cumulative || !p2,
       tension: 0.3,
-      pointRadius: granularity === 'day' ? 2 : 4,
+      pointRadius: showPoints ? 4 : 0,
+      pointHoverRadius: showPoints ? 6 : 4,
       pointBackgroundColor: colors[cat].border,
-      pointHoverRadius: 6,
     }];
 
     let labels = agg1.map(d => d.label);
 
     if (p2) {
-      const raw2 = p2[cat] || [];
-      const agg2 = aggregateData(raw2, granularity);
+      const raw2 = filterByRange((p2[cat] || []).filter(e => !e.date.startsWith(CURRENT_YEAR)), range);
+      const agg2Raw = aggregateData(raw2, granularity);
+      const agg2 = cumulative ? toCumulative(agg2Raw) : agg2Raw;
 
-      // Merge labels from both players
-      const allLabels = new Set([...agg1.map(d => d.label), ...agg2.map(d => d.label)]);
-      labels = [...allLabels].sort();
+      // Merge labels from both players, sorted chronologically by sortKey
+      const labelMap = new Map();
+      for (const d of [...agg1, ...agg2]) {
+        if (!labelMap.has(d.sortKey)) labelMap.set(d.sortKey, d.label);
+      }
+      const sortedKeys = [...labelMap.keys()].sort();
+      labels = sortedKeys.map(k => labelMap.get(k));
 
-      const map1 = Object.fromEntries(agg1.map(d => [d.label, d.value]));
-      const map2 = Object.fromEntries(agg2.map(d => [d.label, d.value]));
+      const map1 = Object.fromEntries(agg1.map(d => [d.sortKey, d.value]));
+      const map2 = Object.fromEntries(agg2.map(d => [d.sortKey, d.value]));
 
-      datasets[0].data = labels.map(l => map1[l] ?? null);
+      datasets[0].data = cumulative
+        ? fillCumulative(sortedKeys, map1)
+        : sortedKeys.map(k => map1[k] ?? null);
       datasets[0].fill = false;
       datasets[0].spanGaps = true;
 
+      const mergedPoints = sortedKeys.length;
+      const showMergedPoints = mergedPoints <= 15;
+      // Update player 1 points for merged count
+      datasets[0].pointRadius = showMergedPoints ? 4 : 0;
+      datasets[0].pointHoverRadius = showMergedPoints ? 6 : 4;
+
       datasets.push({
         label: name2,
-        data: labels.map(l => map2[l] ?? null),
+        data: cumulative
+          ? fillCumulative(sortedKeys, map2)
+          : sortedKeys.map(k => map2[k] ?? null),
         borderColor: colors2[cat].border,
         backgroundColor: colors2[cat].bg,
         borderWidth: 2,
         borderDash: [6, 3],
         fill: false,
         tension: 0.3,
-        pointRadius: granularity === 'day' ? 2 : 4,
+        pointRadius: showMergedPoints ? 4 : 0,
+        pointHoverRadius: showMergedPoints ? 6 : 4,
         pointBackgroundColor: colors2[cat].border,
-        pointHoverRadius: 6,
         spanGaps: true,
       });
     }
@@ -530,7 +784,7 @@ function renderLookupCharts(allPlayers, name1, name2, granularity) {
             ticks: {
               color: '#555a6e',
               font: { family: 'JetBrains Mono', size: 11 },
-              stepSize: 1,
+              ...(cumulative ? {} : { stepSize: 1 }),
             },
             grid: { color: 'rgba(255,255,255,0.03)' },
           },
@@ -550,6 +804,7 @@ function aggregateData(entries, granularity) {
   if (granularity === 'day') {
     return entries.map(e => ({
       label: formatDate(e.date, 'day'),
+      sortKey: e.date,
       value: e.value,
     }));
   }
@@ -565,6 +820,7 @@ function aggregateData(entries, granularity) {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([key, value]) => ({
         label: formatDate(key + '-01', 'month'),
+        sortKey: key,
         value,
       }));
   }
@@ -580,13 +836,9 @@ function aggregateData(entries, granularity) {
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([key, value]) => ({
         label: key,
+        sortKey: key,
         value,
       }));
-  }
-
-  if (granularity === 'allTime') {
-    const total = entries.reduce((s, e) => s + e.value, 0);
-    return [{ label: 'Total', value: total }];
   }
 
   return [];
@@ -600,7 +852,7 @@ function formatDate(isoDate, granularity) {
   const d = parts[2];
 
   if (granularity === 'day') {
-    return `${d}/${String(m + 1).padStart(2, '0')}`;
+    return `${d}/${String(m + 1).padStart(2, '0')}/${y.slice(2)}`;
   }
   if (granularity === 'month') {
     return `${months[m]}/${y.slice(2)}`;

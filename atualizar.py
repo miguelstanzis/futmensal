@@ -144,10 +144,10 @@ def sync_estatisticas_html():
     for year in new_years:
         print(f"  Adicionando ano {year}...")
 
-        # Adicionar tab (antes do All Time)
-        tab_html = f'        <button class="tab" data-year="{year}">{year}</button>\n'
-        all_time_tab = '        <button class="tab" data-year="allTime">All Time</button>'
-        html = html.replace(all_time_tab, tab_html + all_time_tab)
+        # Adicionar tab (depois do All Time)
+        tab_html = f'\n        <button class="tab" data-year="{year}">{year}</button>'
+        all_time_tab = '<button class="tab active" data-year="allTime">All Time</button>'
+        html = html.replace(all_time_tab, all_time_tab + tab_html)
 
         # Adicionar bloco de conteudo (antes do All Time content)
         content_html = (
@@ -183,25 +183,13 @@ def sync_estatisticas_html():
         all_time_content = '      <!-- All Time Stats -->'
         html = html.replace(all_time_content, content_html + all_time_content)
 
-        # Atualizar a tab ativa para o ano mais recente
-        # Remover active de todas as tabs
-        html = re.sub(r'<button class="tab active" data-year="(\d{4})"', r'<button class="tab" data-year="\1"', html)
-        # Remover active de todos os conteudos
-        html = re.sub(r'<div class="estatisticas__content active" data-year="(\d{4})"', r'<div class="estatisticas__content" data-year="\1"', html)
-
-    # Definir o ano mais recente como ativo
-    most_recent = sorted(disk_years)[-1]
-    html = html.replace(
-        f'<button class="tab" data-year="{most_recent}">',
-        f'<button class="tab active" data-year="{most_recent}">'
-    )
-    html = html.replace(
-        f'<div class="estatisticas__content" data-year="{most_recent}">',
-        f'<div class="estatisticas__content active" data-year="{most_recent}">'
-    )
+    # All Time permanece como tab ativa (default)
+    # Garantir que nenhum ano tenha active
+    html = re.sub(r'<button class="tab active" data-year="(\d{4})"', r'<button class="tab" data-year="\1"', html)
+    html = re.sub(r'<div class="estatisticas__content active" data-year="(\d{4})"', r'<div class="estatisticas__content" data-year="\1"', html)
 
     INDEX.write_text(html, encoding="utf-8")
-    print(f"  Anos adicionados: {', '.join(new_years)}. Tab ativa: {most_recent}")
+    print(f"  Anos adicionados: {', '.join(new_years)}. Tab ativa: All Time")
 
 
 def sync_uniformes():

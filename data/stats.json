@@ -1724,23 +1724,23 @@
     "gols": [
       {
         "nome": "Raul",
-        "total": 177
+        "total": 161
       },
       {
         "nome": "Peter",
-        "total": 152
-      },
-      {
-        "nome": "Caique",
-        "total": 152
-      },
-      {
-        "nome": "Gusta",
         "total": 149
       },
       {
+        "nome": "Caique",
+        "total": 145
+      },
+      {
+        "nome": "Gusta",
+        "total": 131
+      },
+      {
         "nome": "Lusca",
-        "total": 134
+        "total": 115
       },
       {
         "nome": "Carlitos",
@@ -1748,47 +1748,39 @@
       },
       {
         "nome": "Randal",
-        "total": 114
+        "total": 96
       },
       {
         "nome": "Math",
-        "total": 97
+        "total": 90
       },
       {
         "nome": "Tuê",
-        "total": 97
+        "total": 86
       },
       {
         "nome": "Feltrin",
-        "total": 93
+        "total": 80
       },
       {
         "nome": "Henriquinho",
-        "total": 81
-      },
-      {
-        "nome": "Cesinha",
-        "total": 55
-      },
-      {
-        "nome": "Murilo",
-        "total": 55
-      },
-      {
-        "nome": "Loirão",
-        "total": 54
+        "total": 72
       },
       {
         "nome": "Ronaldinho",
         "total": 53
       },
       {
-        "nome": "Luiz Ricardo",
-        "total": 50
+        "nome": "Loirão",
+        "total": 51
       },
       {
-        "nome": "Cacalis",
-        "total": 47
+        "nome": "Cesinha",
+        "total": 48
+      },
+      {
+        "nome": "Luiz Ricardo",
+        "total": 44
       },
       {
         "nome": "André Cini",
@@ -1799,16 +1791,20 @@
         "total": 42
       },
       {
+        "nome": "Murilo",
+        "total": 40
+      },
+      {
         "nome": "Hilton",
-        "total": 39
+        "total": 37
       },
       {
         "nome": "André",
         "total": 35
       },
       {
-        "nome": "Ryan",
-        "total": 28
+        "nome": "Cacalis",
+        "total": 34
       },
       {
         "nome": "Miguel",
@@ -1820,15 +1816,7 @@
       },
       {
         "nome": "Fernando",
-        "total": 22
-      },
-      {
-        "nome": "Thuik",
         "total": 21
-      },
-      {
-        "nome": "Cini",
-        "total": 17
       },
       {
         "nome": "Bruno",
@@ -1839,35 +1827,23 @@
         "total": 15
       },
       {
-        "nome": "Vitão",
+        "nome": "Thuik",
         "total": 14
       },
       {
+        "nome": "Vitão",
+        "total": 13
+      },
+      {
         "nome": "André Nini",
-        "total": 13
-      },
-      {
-        "nome": "Lucera",
-        "total": 13
-      },
-      {
-        "nome": "Ochoa",
         "total": 12
       },
       {
-        "nome": "Giuliano",
+        "nome": "Ryan",
         "total": 11
       },
       {
-        "nome": "Karl",
-        "total": 10
-      },
-      {
-        "nome": "Diaz",
-        "total": 10
-      },
-      {
-        "nome": "Mendes",
+        "nome": "Ochoa",
         "total": 9
       },
       {
@@ -1875,7 +1851,11 @@
         "total": 8
       },
       {
-        "nome": "Lucas Faria",
+        "nome": "Karl",
+        "total": 8
+      },
+      {
+        "nome": "Lucera",
         "total": 8
       },
       {
@@ -1883,11 +1863,19 @@
         "total": 7
       },
       {
+        "nome": "Mendes",
+        "total": 7
+      },
+      {
+        "nome": "Diaz",
+        "total": 7
+      },
+      {
         "nome": "Enzo Paulin",
         "total": 7
       },
       {
-        "nome": "Pompeu",
+        "nome": "Lucas Faria",
         "total": 7
       },
       {
@@ -1907,31 +1895,11 @@
         "total": 6
       },
       {
-        "nome": "Pepe",
-        "total": 6
-      },
-      {
         "nome": "Salvador",
         "total": 5
       },
       {
         "nome": "Bruno Dias",
-        "total": 5
-      },
-      {
-        "nome": "Npedro",
-        "total": 5
-      },
-      {
-        "nome": "Pouza",
-        "total": 5
-      },
-      {
-        "nome": "Igor",
-        "total": 5
-      },
-      {
-        "nome": "João Henrique",
         "total": 5
       },
       {
@@ -1979,35 +1947,11 @@
         "total": 3
       },
       {
-        "nome": "Gabriel Tavares",
+        "nome": "Pouza",
         "total": 3
       },
       {
-        "nome": "Lucas Del Bosque",
-        "total": 3
-      },
-      {
-        "nome": "Miguel da Silva",
-        "total": 3
-      },
-      {
-        "nome": "Yuri",
-        "total": 3
-      },
-      {
-        "nome": "Vini Oliveira",
-        "total": 3
-      },
-      {
-        "nome": "Yan",
-        "total": 3
-      },
-      {
-        "nome": "Vini Agustini",
-        "total": 3
-      },
-      {
-        "nome": "Gabriel Araújo",
+        "nome": "Igor",
         "total": 3
       },
       {
@@ -2023,6 +1967,10 @@
         "total": 2
       },
       {
+        "nome": "Npedro",
+        "total": 2
+      },
+      {
         "nome": "Hendrik",
         "total": 2
       },
@@ -2032,22 +1980,6 @@
       },
       {
         "nome": "Murilo Boralli",
-        "total": 2
-      },
-      {
-        "nome": "Muryllo",
-        "total": 2
-      },
-      {
-        "nome": "João Pará",
-        "total": 2
-      },
-      {
-        "nome": "Kauê",
-        "total": 2
-      },
-      {
-        "nome": "Caique Diaz",
         "total": 2
       },
       {
@@ -2093,71 +2025,59 @@
       {
         "nome": "Anderson",
         "total": 1
-      },
-      {
-        "nome": "Pablo",
-        "total": 1
-      },
-      {
-        "nome": "Guilherme",
-        "total": 1
       }
     ],
     "titulos": [
       {
         "nome": "Ochoa",
-        "total": 47
+        "total": 43
       },
       {
         "nome": "Bruce",
-        "total": 44
+        "total": 41
       },
       {
         "nome": "Math",
-        "total": 39
+        "total": 35
       },
       {
         "nome": "Gusta",
-        "total": 38
+        "total": 34
       },
       {
         "nome": "Feltrin",
-        "total": 33
-      },
-      {
-        "nome": "Raul",
         "total": 30
       },
       {
-        "nome": "Di",
-        "total": 28
+        "nome": "Raul",
+        "total": 27
       },
       {
         "nome": "Tuê",
-        "total": 25
+        "total": 24
       },
       {
         "nome": "Peter",
         "total": 23
       },
       {
-        "nome": "Lusca",
-        "total": 23
-      },
-      {
-        "nome": "Henriquinho",
-        "total": 23
-      },
-      {
-        "nome": "Randal",
+        "nome": "Di",
         "total": 22
       },
       {
-        "nome": "Cesinha",
-        "total": 21
+        "nome": "Henriquinho",
+        "total": 22
       },
       {
-        "nome": "Karl",
+        "nome": "Randal",
+        "total": 20
+      },
+      {
+        "nome": "Lusca",
+        "total": 19
+      },
+      {
+        "nome": "Cesinha",
         "total": 19
       },
       {
@@ -2165,19 +2085,15 @@
         "total": 18
       },
       {
-        "nome": "Miguel",
-        "total": 17
-      },
-      {
         "nome": "André Cini",
         "total": 17
       },
       {
-        "nome": "Caíque",
-        "total": 15
+        "nome": "Miguel",
+        "total": 16
       },
       {
-        "nome": "Luiz Ricardo",
+        "nome": "Caíque",
         "total": 15
       },
       {
@@ -2185,12 +2101,20 @@
         "total": 15
       },
       {
+        "nome": "Karl",
+        "total": 14
+      },
+      {
         "nome": "André",
         "total": 13
       },
       {
+        "nome": "Luiz Ricardo",
+        "total": 13
+      },
+      {
         "nome": "Loirão",
-        "total": 12
+        "total": 11
       },
       {
         "nome": "Ronaldinho",
@@ -2198,18 +2122,10 @@
       },
       {
         "nome": "Murilo",
-        "total": 11
-      },
-      {
-        "nome": "Cacalis",
-        "total": 10
+        "total": 9
       },
       {
         "nome": "Hilton",
-        "total": 8
-      },
-      {
-        "nome": "Fernando",
         "total": 8
       },
       {
@@ -2221,6 +2137,10 @@
         "total": 8
       },
       {
+        "nome": "Fernando",
+        "total": 7
+      },
+      {
         "nome": "Guastella",
         "total": 7
       },
@@ -2229,8 +2149,8 @@
         "total": 6
       },
       {
-        "nome": "Thuik",
-        "total": 4
+        "nome": "Cacalis",
+        "total": 6
       },
       {
         "nome": "Pouza",
@@ -2261,20 +2181,8 @@
         "total": 3
       },
       {
-        "nome": "André Nini",
-        "total": 3
-      },
-      {
-        "nome": "Igor",
-        "total": 3
-      },
-      {
-        "nome": "Cini",
-        "total": 3
-      },
-      {
-        "nome": "Giuliano",
-        "total": 3
+        "nome": "Thuik",
+        "total": 2
       },
       {
         "nome": "Bielzinho",
@@ -2290,6 +2198,10 @@
       },
       {
         "nome": "Rivaldo",
+        "total": 2
+      },
+      {
+        "nome": "André Nini",
         "total": 2
       },
       {
@@ -2318,26 +2230,6 @@
       },
       {
         "nome": "Murilo Boralli",
-        "total": 2
-      },
-      {
-        "nome": "Mendes",
-        "total": 2
-      },
-      {
-        "nome": "Pablo",
-        "total": 2
-      },
-      {
-        "nome": "Pepe",
-        "total": 2
-      },
-      {
-        "nome": "João Henrique",
-        "total": 2
-      },
-      {
-        "nome": "Guilherme",
         "total": 2
       },
       {
@@ -2381,6 +2273,10 @@
         "total": 1
       },
       {
+        "nome": "Mendes",
+        "total": 1
+      },
+      {
         "nome": "Maga",
         "total": 1
       },
@@ -2389,46 +2285,30 @@
         "total": 1
       },
       {
-        "nome": "Pompeu",
+        "nome": "Pablo",
         "total": 1
       },
       {
-        "nome": "Vini Oliveira",
-        "total": 1
-      },
-      {
-        "nome": "Yan",
-        "total": 1
-      },
-      {
-        "nome": "Vini Agustini",
-        "total": 1
-      },
-      {
-        "nome": "Vini",
+        "nome": "Igor",
         "total": 1
       }
     ],
     "votos": [
       {
         "nome": "Math",
-        "total": 133
+        "total": 123
       },
       {
         "nome": "Bruce",
-        "total": 121
-      },
-      {
-        "nome": "Ochoa",
-        "total": 103
+        "total": 95
       },
       {
         "nome": "Gusta",
-        "total": 99
+        "total": 94
       },
       {
-        "nome": "Di",
-        "total": 89
+        "nome": "Ochoa",
+        "total": 94
       },
       {
         "nome": "Peter",
@@ -2436,31 +2316,35 @@
       },
       {
         "nome": "Caique",
-        "total": 85
-      },
-      {
-        "nome": "Raul",
         "total": 83
       },
       {
-        "nome": "Lusca",
-        "total": 82
+        "nome": "Randal",
+        "total": 76
       },
       {
-        "nome": "Randal",
-        "total": 80
+        "nome": "Raul",
+        "total": 75
+      },
+      {
+        "nome": "Di",
+        "total": 74
+      },
+      {
+        "nome": "Lusca",
+        "total": 69
       },
       {
         "nome": "Feltrin",
-        "total": 65
+        "total": 64
       },
       {
         "nome": "Tuê",
-        "total": 60
+        "total": 57
       },
       {
         "nome": "Henriquinho",
-        "total": 57
+        "total": 56
       },
       {
         "nome": "Carlitos",
@@ -2468,43 +2352,39 @@
       },
       {
         "nome": "Vitão",
-        "total": 43
+        "total": 42
       },
       {
         "nome": "André Cini",
         "total": 41
       },
       {
-        "nome": "Luiz Ricardo",
-        "total": 39
-      },
-      {
-        "nome": "Murilo",
-        "total": 38
-      },
-      {
         "nome": "Hendrik",
         "total": 33
-      },
-      {
-        "nome": "Karl",
-        "total": 32
       },
       {
         "nome": "Loirão",
         "total": 31
       },
       {
+        "nome": "Luiz Ricardo",
+        "total": 28
+      },
+      {
         "nome": "André",
         "total": 25
       },
       {
-        "nome": "Cesinha",
-        "total": 23
+        "nome": "Karl",
+        "total": 24
       },
       {
         "nome": "Hilton",
         "total": 22
+      },
+      {
+        "nome": "Murilo",
+        "total": 21
       },
       {
         "nome": "Ronaldinho",
@@ -2515,43 +2395,31 @@
         "total": 19
       },
       {
-        "nome": "Ryan",
-        "total": 19
+        "nome": "Cesinha",
+        "total": 18
       },
       {
         "nome": "NPedro",
         "total": 18
       },
       {
-        "nome": "Cacalis",
-        "total": 17
-      },
-      {
-        "nome": "Thuik",
-        "total": 14
-      },
-      {
         "nome": "Enzo Paulin",
         "total": 14
       },
       {
-        "nome": "Miguel",
+        "nome": "Cacalis",
         "total": 13
       },
       {
-        "nome": "Diaz",
-        "total": 13
-      },
-      {
-        "nome": "Cini",
-        "total": 12
-      },
-      {
-        "nome": "Giuliano",
+        "nome": "Thuik",
         "total": 11
       },
       {
-        "nome": "André Nini",
+        "nome": "Ryan",
+        "total": 10
+      },
+      {
+        "nome": "Diaz",
         "total": 10
       },
       {
@@ -2559,7 +2427,15 @@
         "total": 9
       },
       {
+        "nome": "Miguel",
+        "total": 9
+      },
+      {
         "nome": "Pouza",
+        "total": 9
+      },
+      {
+        "nome": "André Nini",
         "total": 9
       },
       {
@@ -2587,15 +2463,7 @@
         "total": 6
       },
       {
-        "nome": "Pepe",
-        "total": 6
-      },
-      {
         "nome": "Bruno Dias",
-        "total": 5
-      },
-      {
-        "nome": "Guilherme",
         "total": 5
       },
       {
@@ -2615,27 +2483,7 @@
         "total": 4
       },
       {
-        "nome": "Pompeu",
-        "total": 4
-      },
-      {
         "nome": "Vinicius Cé",
-        "total": 3
-      },
-      {
-        "nome": "Yan",
-        "total": 3
-      },
-      {
-        "nome": "Vini Agustini",
-        "total": 3
-      },
-      {
-        "nome": "Gabriel Araújo",
-        "total": 3
-      },
-      {
-        "nome": "Caique Diaz",
         "total": 3
       },
       {
@@ -2652,18 +2500,6 @@
       },
       {
         "nome": "Gui Fisio",
-        "total": 2
-      },
-      {
-        "nome": "Mendes",
-        "total": 2
-      },
-      {
-        "nome": "João Henrique",
-        "total": 2
-      },
-      {
-        "nome": "Igor",
         "total": 2
       },
       {
@@ -2691,6 +2527,10 @@
         "total": 1
       },
       {
+        "nome": "Mendes",
+        "total": 1
+      },
+      {
         "nome": "Maga",
         "total": 1
       },
@@ -2708,14 +2548,6 @@
       },
       {
         "nome": "Bruno Souza",
-        "total": 1
-      },
-      {
-        "nome": "Lucas Del Bosque",
-        "total": 1
-      },
-      {
-        "nome": "Kauê",
         "total": 1
       }
     ]

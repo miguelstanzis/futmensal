@@ -312,9 +312,11 @@ async function main() {
     if (votosSheet) mergeTimeseries(parseSheetTimeseries(wb, votosSheet), 'votos');
   }
 
-  // All Time aggregation (all detected years)
+  // All Time aggregation (exclude current year to hide prize data)
+  const currentYear = String(new Date().getFullYear());
   const allTime = { gols: {}, titulos: {}, votos: {} };
   for (const { year } of files) {
+    if (year === currentYear) continue;
     for (const cat of ['gols', 'titulos', 'votos']) {
       for (const p of stats[year][cat]) {
         if (!allTime[cat][p.nome]) allTime[cat][p.nome] = 0;
@@ -342,7 +344,7 @@ async function main() {
   await writeFile(OUT, JSON.stringify(stats, null, 2), 'utf-8');
   console.log(`\nWritten to ${OUT}`);
   console.log(`Players with timeseries: ${Object.keys(playerTimeseries).length}`);
-  console.log(`\nAll Time Top 5:`);
+  console.log(`\nAll Time Top 5 (excluding ${currentYear}):`);
   console.log(`  Gols: ${stats.allTime.gols.slice(0, 5).map(p => `${p.nome}(${p.total})`).join(', ')}`);
   console.log(`  Titulos: ${stats.allTime.titulos.slice(0, 5).map(p => `${p.nome}(${p.total})`).join(', ')}`);
   console.log(`  Votos: ${stats.allTime.votos.slice(0, 5).map(p => `${p.nome}(${p.total})`).join(', ')}`);

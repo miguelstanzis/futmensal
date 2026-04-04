@@ -245,14 +245,14 @@
       </div>
 
       <div class="tabs reveal">
-        <button class="tab active" data-year="2026">2026</button>
+        <button class="tab active" data-year="allTime">All Time</button>
+        <button class="tab" data-year="2026">2026</button>
         <button class="tab" data-year="2025">2025</button>
         <button class="tab" data-year="2024">2024</button>
-        <button class="tab" data-year="allTime">All Time</button>
       </div>
 
       <!-- 2026 Stats -->
-      <div class="estatisticas__content active" data-year="2026">
+      <div class="estatisticas__content" data-year="2026">
         <div id="stats-summary-2026" class="stats-summary reveal"></div>
         <div class="stats-grid">
           <div class="stat-card reveal">
@@ -336,7 +336,7 @@
       </div>
 
       <!-- All Time Stats -->
-      <div class="estatisticas__content" data-year="allTime">
+      <div class="estatisticas__content active" data-year="allTime">
         <div id="stats-summary-allTime" class="stats-summary reveal"></div>
         <div class="stats-grid">
           <div class="stat-card reveal">
@@ -375,6 +375,7 @@
             <div class="player-lookup__input-wrap">
               <svg class="player-lookup__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" class="player-lookup__input" id="player-input-1" placeholder="Digite o nome..." autocomplete="off">
+              <button class="player-lookup__clear" id="clear-player-1" type="button" title="Limpar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
               <div class="player-lookup__dropdown" id="dropdown-1"></div>
             </div>
           </div>
@@ -384,16 +385,42 @@
             <div class="player-lookup__input-wrap">
               <svg class="player-lookup__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" class="player-lookup__input" id="player-input-2" placeholder="Opcional..." autocomplete="off">
+              <button class="player-lookup__clear" id="clear-player-2" type="button" title="Limpar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
               <div class="player-lookup__dropdown" id="dropdown-2"></div>
             </div>
           </div>
         </div>
 
-        <div class="player-lookup__granularity">
-          <button class="filter-pill active" data-granularity="allTime">All Time</button>
-          <button class="filter-pill" data-granularity="year">Ano</button>
-          <button class="filter-pill" data-granularity="month">Mês</button>
-          <button class="filter-pill" data-granularity="day">Dia</button>
+        <div class="player-lookup__filters-row">
+          <div class="player-lookup__filter-group">
+            <span class="player-lookup__filter-title">Período</span>
+            <div class="player-lookup__date-range">
+            <div class="date-range__field">
+              <label class="date-range__label">De</label>
+              <div class="month-picker" id="month-picker-from">
+                <button class="month-picker__trigger" type="button">--</button>
+                <div class="month-picker__dropdown"></div>
+              </div>
+              <select class="date-range__select" id="date-from-year">
+                <option value="" hidden>--</option>
+              </select>
+            </div>
+            <span class="date-range__separator"></span>
+            <div class="date-range__field">
+              <label class="date-range__label">Até</label>
+              <div class="month-picker" id="month-picker-to">
+                <button class="month-picker__trigger" type="button">--</button>
+                <div class="month-picker__dropdown"></div>
+              </div>
+              <select class="date-range__select" id="date-to-year">
+                <option value="" hidden>--</option>
+              </select>
+            </div>
+            <button class="date-range__clear" id="date-clear" title="Limpar datas">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          </div>
         </div>
 
         <!-- Results area -->
@@ -401,8 +428,25 @@
           <!-- Player stats rendered by JS -->
           <div class="player-cards"></div>
 
-          <!-- Charts (shown when granularity != allTime) -->
+          <!-- Charts -->
           <div class="player-lookup__charts" style="display:none;">
+            <div class="player-lookup__chart-controls" id="chart-controls-inline">
+              <div class="player-lookup__filter-group">
+                <span class="player-lookup__filter-title">Frequência</span>
+                <div class="chart-controls__pills">
+                  <button class="filter-pill" data-granularity="year">Anual</button>
+                  <button class="filter-pill active" data-granularity="month">Mensal</button>
+                  <button class="filter-pill" data-granularity="day">Diária</button>
+                </div>
+              </div>
+              <div class="player-lookup__filter-group">
+                <span class="player-lookup__filter-title">Modo</span>
+                <div class="chart-controls__pills">
+                  <button class="filter-pill active" data-mode="individual">Individual</button>
+                  <button class="filter-pill" data-mode="cumulative">Acumulado</button>
+                </div>
+              </div>
+            </div>
             <div class="player-chart-card">
               <div class="player-chart-card__header">
                 <span class="player-chart-card__dot player-chart-card__dot--pink"></span>
@@ -444,6 +488,25 @@
       </a>
     </div>
   </footer>
+
+  <!-- Floating chart controls -->
+  <div class="chart-mode-float" id="chart-mode-float">
+    <div class="chart-mode-float__box">
+      <span class="chart-mode-float__title">Frequência</span>
+      <div class="chart-mode-float__pills">
+        <button class="filter-pill" data-granularity="year">Anual</button>
+        <button class="filter-pill active" data-granularity="month">Mensal</button>
+        <button class="filter-pill" data-granularity="day">Diária</button>
+      </div>
+    </div>
+    <div class="chart-mode-float__box">
+      <span class="chart-mode-float__title">Modo</span>
+      <div class="chart-mode-float__pills">
+        <button class="filter-pill active" data-mode="individual">Individual</button>
+        <button class="filter-pill" data-mode="cumulative">Acumulado</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script type="module" src="./js/main.js"></script>
