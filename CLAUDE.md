@@ -48,33 +48,31 @@ Cada planilha tem abas: GOLS, TITULOS, VOTOS-MOTM, PRESENCA (2026 apenas).
 
 # Guia de atualizacao semanal
 
-Ao iniciar um novo chat no Claude Code para atualizar o site, copie e cole o comando relevante abaixo.
+## Script automatizado: `atualizar.py`
 
-## 1. Atualizar estatisticas
+O script `atualizar.py` na raiz do projeto automatiza todo o fluxo. Basta rodar:
 
-> Atualize as estatisticas do site Fut Mensal. A planilha Excel na pasta pai do projeto ja foi atualizada com os dados da semana. Rode `npm run parse-stats` dentro de `site/`, depois copie `data/stats.json` para `public/data/stats.json`. Verifique se o parse rodou sem erros.
+```bash
+cd site
+python atualizar.py
+```
 
-## 2. Adicionar fotos na galeria
+### O que o script faz:
+1. Roda `npm run parse-stats` para gerar stats.json a partir das planilhas Excel
+2. Roda `npm run parse-gallery` para gerar gallery.json a partir das fotos
+3. Sincroniza fotos com public/ (adicoes E remocoes - funciona como espelho)
+4. Sincroniza uniformes com public/ e detecta novas temporadas automaticamente (gera o HTML)
+5. Commit e push para GitHub (Cloudflare faz deploy automatico)
 
-> Adicione novas fotos a galeria do site Fut Mensal. As fotos ja estao na pasta `site/assets/fotos/` nas subpastas corretas (campeoes, jogadores, motm ou premios). O padrao de nome e: `categoria DD-MM-YY.jpg`. Rode `npm run parse-gallery` dentro de `site/`, depois copie `data/gallery.json` para `public/data/gallery.json` e copie as novas fotos de `assets/fotos/` para `public/assets/fotos/` mantendo a estrutura de pastas.
+### Antes de rodar o script:
+1. Atualize a planilha Excel na pasta pai do projeto
+2. Adicione novas fotos em `assets/fotos/` (subpastas: campeoes, jogadores, motm, premios)
+3. Para REMOVER fotos do site: delete o arquivo de `assets/fotos/` - o script remove automaticamente do public/
+4. Para novo uniforme: crie a pasta em `assets/uniformes/` (ex: `2026.2/`) com as imagens (linha.jpeg, goleiro.jpeg, etc.)
 
-## 3. Adicionar novo uniforme
+### Prompt para o Claude Code caso o script de erro:
 
-> Adicione um novo uniforme ao site Fut Mensal. A temporada e [TEMPORADA, ex: 2026.2]. As imagens ja estao em `site/assets/uniformes/[TEMPORADA]/`. Preciso que voce: (1) copie as imagens para `public/assets/uniformes/[TEMPORADA]/`, (2) adicione o novo bloco HTML em `index.html` na secao uniformes, seguindo o padrao dos blocos existentes (kit-node com kit-groups para cada tipo: Linha, GK, Alt).
-
-## 4. Publicar as alteracoes
-
-> Publique as alteracoes do site Fut Mensal. Faca commit de todos os arquivos alterados com uma mensagem descritiva e de push para o repositorio GitHub (origin main). O Cloudflare Pages vai rebuildar automaticamente.
-
-## 5. Atualizar tudo de uma vez (fluxo completo semanal)
-
-> Faca a atualizacao semanal completa do site Fut Mensal:
-> 1. Rode `npm run parse-stats` em `site/` para atualizar estatisticas (planilha ja foi atualizada)
-> 2. Rode `npm run parse-gallery` em `site/` para atualizar a galeria (fotos ja foram colocadas nas pastas)
-> 3. Copie `data/stats.json` e `data/gallery.json` para `public/data/`
-> 4. Copie `assets/fotos/` para `public/assets/fotos/`
-> 5. Faca commit e push para GitHub
-> 6. Confirme que nao houve erros em nenhuma etapa
+> O script `atualizar.py` deu erro ao rodar. Leia o script, identifique o problema e corrija. O script fica em `site/atualizar.py`.
 
 ---
 
