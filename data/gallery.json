@@ -1,0 +1,118 @@
+{
+  "categorias": [
+    {
+      "id": "campeoes",
+      "label": "Campeões"
+    },
+    {
+      "id": "jogadores",
+      "label": "Jogadores"
+    },
+    {
+      "id": "motm",
+      "label": "Man of the Match"
+    },
+    {
+      "id": "premios",
+      "label": "Prêmios"
+    }
+  ],
+  "fotos": [
+    {
+      "src": "assets/fotos/campeoes/campeoes 28-03-26.jpg",
+      "categoria": "campeoes",
+      "categoriaLabel": "Campeões",
+      "data": "28/03/2026",
+      "sortKey": "2026-03-28",
+      "titulo": "Campeões da Semana - 28/03/2026"
+    },
+    {
+      "src": "assets/fotos/jogadores/jogadores 28-03-26.jpg",
+      "categoria": "jogadores",
+      "categoriaLabel": "Jogadores",
+      "data": "28/03/2026",
+      "sortKey": "2026-03-28",
+      "titulo": "Jogadores da Semana - 28/03/2026"
+    },
+    {
+      "src": "assets/fotos/campeoes/campeoes 21-03-26.jpg",
+      "categoria": "campeoes",
+      "categoriaLabel": "Campeões",
+      "data": "21/03/2026",
+      "sortKey": "2026-03-21",
+      "titulo": "Campeões da Semana - 21/03/2026"
+    },
+    {
+      "src": "assets/fotos/jogadores/jogadores 21-03-26.jpg",
+      "categoria": "jogadores",
+      "categoriaLabel": "Jogadores",
+      "data": "21/03/2026",
+      "sortKey": "2026-03-21",
+      "titulo": "Jogadores da Semana - 21/03/2026"
+    },
+    {
+      "src": "assets/fotos/motm/motm 21-03-26.jpg",
+      "categoria": "motm",
+      "categoriaLabel": "Man of the Match",
+      "data": "21/03/2026",
+      "sortKey": "2026-03-21",
+      "titulo": "Man of the Match - 21/03/2026"
+    },
+    {
+      "src": "assets/fotos/campeoes/campeoes 14-03-26.jpg",
+      "categoria": "campeoes",
+      "categoriaLabel": "Campeões",
+      "data": "14/03/2026",
+      "sortKey": "2026-03-14",
+      "titulo": "Campeões da Semana - 14/03/2026"
+    },
+    {
+      "src": "assets/fotos/jogadores/jogadores 14-03-26.jpg",
+      "categoria": "jogadores",
+      "categoriaLabel": "Jogadores",
+      "data": "14/03/2026",
+      "sortKey": "2026-03-14",
+      "titulo": "Jogadores da Semana - 14/03/2026"
+    },
+    {
+      "src": "assets/fotos/motm/motm 14-03-26.jpg",
+      "categoria": "motm",
+      "categoriaLabel": "Man of the Match",
+      "data": "14/03/2026",
+      "sortKey": "2026-03-14",
+      "titulo": "Man of the Match - 14/03/2026"
+    },
+    {
+      "src": "assets/fotos/motm/motm 07-03-26.jpg",
+      "categoria": "motm",
+      "categoriaLabel": "Man of the Match",
+      "data": "07/03/2026",
+      "sortKey": "2026-03-07",
+      "titulo": "Man of the Match - 07/03/2026"
+    },
+    {
+      "src": "assets/fotos/premios/bola de ouro 2025.jpg",
+      "categoria": "premios",
+      "categoriaLabel": "Prêmios",
+      "data": "2025",
+      "sortKey": "2025-01-01",
+      "titulo": "Bola de Ouro 2025"
+    },
+    {
+      "src": "assets/fotos/premios/chuteira de ouro 2025.jpg",
+      "categoria": "premios",
+      "categoriaLabel": "Prêmios",
+      "data": "2025",
+      "sortKey": "2025-01-01",
+      "titulo": "Chuteira de Ouro 2025"
+    },
+    {
+      "src": "assets/fotos/premios/Luvo de ouro 2025.jpg",
+      "categoria": "premios",
+      "categoriaLabel": "Prêmios",
+      "data": "2025",
+      "sortKey": "2025-01-01",
+      "titulo": "Luva de Ouro 2025"
+    }
+  ]
+}
