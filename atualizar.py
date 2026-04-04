@@ -114,6 +114,96 @@ def sync_fotos():
     print(f"  Fotos: {added} adicionadas/atualizadas, {removed} removidas")
 
 
+def sync_estatisticas_html():
+    """Detecta novos anos nas planilhas e adiciona tabs/blocos de estatisticas ao HTML."""
+    print("\n[3.5/5] Verificando anos de estatisticas no HTML...")
+
+    # Detectar anos nas planilhas
+    parent = SITE.parent
+    xlsx_files = [f for f in parent.iterdir() if f.suffix.lower() == ".xlsx" and "stats" in f.name.lower()]
+    disk_years = set()
+    for f in xlsx_files:
+        m = re.search(r"(20\d{2})", f.name)
+        if m:
+            disk_years.add(m.group(1))
+
+    if not disk_years:
+        print("  Nenhuma planilha encontrada")
+        return
+
+    html = INDEX.read_text(encoding="utf-8")
+
+    # Anos ja presentes no HTML
+    existing_tabs = set(re.findall(r'<button class="tab[^"]*" data-year="(\d{4})"', html))
+    new_years = sorted(disk_years - existing_tabs)
+
+    if not new_years:
+        print("  Todos os anos ja estao no HTML")
+        return
+
+    for year in new_years:
+        print(f"  Adicionando ano {year}...")
+
+        # Adicionar tab (antes do All Time)
+        tab_html = f'        <button class="tab" data-year="{year}">{year}</button>\n'
+        all_time_tab = '        <button class="tab" data-year="allTime">All Time</button>'
+        html = html.replace(all_time_tab, tab_html + all_time_tab)
+
+        # Adicionar bloco de conteudo (antes do All Time content)
+        content_html = (
+            f'\n      <!-- {year} Stats -->\n'
+            f'      <div class="estatisticas__content" data-year="{year}">\n'
+            f'        <div id="stats-summary-{year}" class="stats-summary reveal"></div>\n'
+            f'        <div class="stats-grid">\n'
+            f'          <div class="stat-card reveal">\n'
+            f'            <div class="stat-card__header">\n'
+            f'              <h3 class="stat-card__title">Artilharia</h3>\n'
+            f'              <span class="stat-card__icon">&#9917;</span>\n'
+            f'            </div>\n'
+            f'            <div id="stats-gols-{year}" class="bar-chart"></div>\n'
+            f'          </div>\n'
+            f'          <div class="stat-card reveal">\n'
+            f'            <div class="stat-card__header">\n'
+            f'              <h3 class="stat-card__title">Títulos</h3>\n'
+            f'              <span class="stat-card__icon">&#127942;</span>\n'
+            f'            </div>\n'
+            f'            <div id="stats-titulos-{year}" class="bar-chart"></div>\n'
+            f'          </div>\n'
+            f'          <div class="stat-card reveal">\n'
+            f'            <div class="stat-card__header">\n'
+            f'              <h3 class="stat-card__title">Craque da Semana</h3>\n'
+            f'              <span class="stat-card__icon">&#11088;</span>\n'
+            f'            </div>\n'
+            f'            <div id="stats-votos-{year}" class="bar-chart"></div>\n'
+            f'          </div>\n'
+            f'        </div>\n'
+            f'      </div>\n'
+        )
+
+        all_time_content = '      <!-- All Time Stats -->'
+        html = html.replace(all_time_content, content_html + all_time_content)
+
+        # Atualizar a tab ativa para o ano mais recente
+        # Remover active de todas as tabs
+        html = re.sub(r'<button class="tab active" data-year="(\d{4})"', r'<button class="tab" data-year="\1"', html)
+        # Remover active de todos os conteudos
+        html = re.sub(r'<div class="estatisticas__content active" data-year="(\d{4})"', r'<div class="estatisticas__content" data-year="\1"', html)
+
+    # Definir o ano mais recente como ativo
+    most_recent = sorted(disk_years)[-1]
+    html = html.replace(
+        f'<button class="tab" data-year="{most_recent}">',
+        f'<button class="tab active" data-year="{most_recent}">'
+    )
+    html = html.replace(
+        f'<div class="estatisticas__content" data-year="{most_recent}">',
+        f'<div class="estatisticas__content active" data-year="{most_recent}">'
+    )
+
+    INDEX.write_text(html, encoding="utf-8")
+    print(f"  Anos adicionados: {', '.join(new_years)}. Tab ativa: {most_recent}")
+
+
 def sync_uniformes():
     """Sincroniza uniformes e detecta novas temporadas para adicionar ao HTML."""
     print("\n[4/5] Sincronizando uniformes...")
@@ -219,6 +309,7 @@ def main():
     parse_stats()
     parse_gallery()
     sync_fotos()
+    sync_estatisticas_html()
     sync_uniformes()
     git_push()
 

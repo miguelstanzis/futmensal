@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir } from 'fs/promises';
+import { readFile, readdir, writeFile, mkdir } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import XLSX from 'xlsx';
@@ -228,11 +228,23 @@ function parseSheetTimeseries(workbook, sheetName) {
 // --------------- main ---------------
 
 async function main() {
-  const files = [
-    { path: join(PARENT, 'STATS FUT MENSAL - 2024.xlsx'), year: '2024' },
-    { path: join(PARENT, 'STATS FUT MENSAL - 2025.xlsx'), year: '2025' },
-    { path: join(PARENT, 'STATS 2026.xlsx'), year: '2026' },
-  ];
+  // Auto-detect Excel files in the parent directory
+  const parentFiles = await readdir(PARENT);
+  const files = parentFiles
+    .filter(f => /\.xlsx$/i.test(f) && /stats/i.test(f))
+    .map(f => {
+      const yearMatch = f.match(/(20\d{2})/);
+      return yearMatch ? { path: join(PARENT, f), year: yearMatch[1] } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.year.localeCompare(b.year));
+
+  if (files.length === 0) {
+    console.error('No STATS .xlsx files found in', PARENT);
+    process.exit(1);
+  }
+
+  console.log(`Found ${files.length} spreadsheet(s): ${files.map(f => f.year).join(', ')}`);
 
   const stats = {};
 
@@ -275,7 +287,9 @@ async function main() {
       votos: votosSheet ? parseSheetGeneric(wb, votosSheet) : [],
     };
 
-    if (year === '2026') {
+    // Parse presenca if the sheet exists
+    const presencaSheet = wb.SheetNames.find(s => /^PRESEN[CÇ]A$/i.test(s.trim()));
+    if (presencaSheet) {
       yearData.presenca = parsePresenca(wb);
     }
 
@@ -298,9 +312,9 @@ async function main() {
     if (votosSheet) mergeTimeseries(parseSheetTimeseries(wb, votosSheet), 'votos');
   }
 
-  // All Time aggregation (existing)
+  // All Time aggregation (all detected years)
   const allTime = { gols: {}, titulos: {}, votos: {} };
-  for (const year of ['2024', '2025', '2026']) {
+  for (const { year } of files) {
     for (const cat of ['gols', 'titulos', 'votos']) {
       for (const p of stats[year][cat]) {
         if (!allTime[cat][p.nome]) allTime[cat][p.nome] = 0;

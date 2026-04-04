@@ -6,7 +6,9 @@ export function initEstatisticas(statsData) {
   if (!statsData) return;
 
   initTabs(statsData);
-  renderYear(statsData, '2026');
+  // Show the most recent year by default
+  const years = Object.keys(statsData).filter(k => /^\d{4}$/.test(k)).sort();
+  renderYear(statsData, years[years.length - 1] || '2026');
   initBarAnimations();
   initPlayerLookup(statsData);
 }
@@ -147,7 +149,8 @@ function initBarAnimations() {
 }
 
 export function renderAllYears(data) {
-  for (const year of ['2024', '2025', '2026', 'allTime']) {
+  const years = Object.keys(data).filter(k => /^\d{4}$/.test(k)).sort();
+  for (const year of [...years, 'allTime']) {
     if (data[year]) {
       renderYear(data, year);
     }
