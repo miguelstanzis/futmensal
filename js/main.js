@@ -18,20 +18,11 @@ async function loadJSON(path) {
   }
 }
 
-async function init() {
-  // Load data
-  const [statsData, galleryData, proPlayersData] = await Promise.all([
+async function initStatsLazy() {
+  const [statsData, proPlayersData] = await Promise.all([
     loadJSON('./data/stats.json'),
-    loadJSON('./data/gallery.json'),
     loadJSON('./data/pro-players.json'),
   ]);
-
-  // Init modules
-  initNav();
-  initHero();
-  initPatrocinadores();
-  initUniformes();
-  initGaleria(galleryData);
 
   if (statsData) {
     renderAllYears(statsData);
@@ -40,6 +31,32 @@ async function init() {
 
   if (proPlayersData) {
     initReguaGols(proPlayersData);
+  }
+}
+
+async function init() {
+  // Load only lightweight data eagerly
+  const galleryData = await loadJSON('./data/gallery.json');
+
+  // Init modules
+  initNav();
+  initHero();
+  initPatrocinadores();
+  initUniformes();
+  initGaleria(galleryData);
+
+  // Lazy-load stats when section approaches viewport
+  const statsSection = document.getElementById('estatisticas');
+  if (statsSection) {
+    let statsLoaded = false;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !statsLoaded) {
+        statsLoaded = true;
+        observer.disconnect();
+        initStatsLazy();
+      }
+    }, { rootMargin: '400px' });
+    observer.observe(statsSection);
   }
 
   initScrollReveal();
