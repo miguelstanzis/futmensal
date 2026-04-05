@@ -10,7 +10,7 @@ const ICONS_DIR = join(ROOT, 'public/icons');
 const PUBLIC_DIR = join(ROOT, 'public');
 
 const BG_COLOR = { r: 0, g: 0, b: 0, alpha: 1 };
-const SCALE = 1.01;
+const SCALE = 1.00;
 
 const STANDARD_SIZES = [48, 72, 96, 144, 192, 512, 1024];
 const APPLE_SIZES = [120, 152, 167, 180];
