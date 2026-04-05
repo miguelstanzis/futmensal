@@ -6,6 +6,7 @@ import { initEstatisticas, renderAllYears } from './estatisticas.js';
 import { initScrollReveal } from './animations.js';
 import { initPatrocinadores } from './patrocinadores.js';
 import { initReguaGols } from './regua-gols.js';
+import { initInstallBanner } from './install-banner.js';
 
 async function loadJSON(path) {
   try {
@@ -42,6 +43,7 @@ async function init() {
   }
 
   initScrollReveal();
+  initInstallBanner();
 }
 
 document.addEventListener('DOMContentLoaded', init);

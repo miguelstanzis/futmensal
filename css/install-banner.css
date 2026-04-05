@@ -1,0 +1,123 @@
+.install-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-hover);
+  padding: var(--space-md) var(--space-lg);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--space-md));
+  transform: translateY(-100%);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.install-banner--visible {
+  transform: translateY(0);
+}
+
+.install-banner__close {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + var(--space-sm));
+  right: var(--space-md);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: var(--space-xs);
+}
+
+.install-banner__close:hover {
+  color: var(--text-primary);
+}
+
+.install-banner__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+}
+
+.install-banner__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.install-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.install-banner__text strong {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.install-banner__text span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Steps - hidden by default, expand on click */
+.install-banner__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height var(--duration-normal) var(--ease-out),
+              opacity var(--duration-normal) var(--ease-out),
+              margin-top var(--duration-normal) var(--ease-out);
+  margin-top: 0;
+}
+
+.install-banner--expanded .install-banner__steps {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: var(--space-md);
+}
+
+.install-banner__step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.install-banner__step strong {
+  color: var(--accent-pink-light);
+  font-weight: 600;
+}
+
+.install-banner__step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-pink);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.install-banner__safari-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: -4px;
+  color: var(--accent-cyan);
+}
