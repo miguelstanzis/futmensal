@@ -1,0 +1,265 @@
+/* ===== RÉGUA DE GOLS ===== */
+.regua-gols {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid var(--border);
+}
+
+.regua-gols__header {
+  text-align: center;
+  margin-bottom: var(--space-sm);
+}
+
+.regua-gols__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.regua-gols__desc {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.regua-gols__hint {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.regua-gols__hint span {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ===== VIEWPORT — horizontal only ===== */
+.regua-gols__viewport-wrap {
+  position: relative;
+}
+
+.regua-gols__viewport-wrap::before,
+.regua-gols__viewport-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.regua-gols__viewport-wrap::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg-secondary), transparent);
+}
+
+.regua-gols__viewport-wrap::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--bg-secondary), transparent);
+}
+
+.regua-gols__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-pink) transparent;
+}
+
+.regua-gols__viewport::-webkit-scrollbar { height: 4px; }
+.regua-gols__viewport::-webkit-scrollbar-track { background: transparent; }
+.regua-gols__viewport::-webkit-scrollbar-thumb {
+  background: var(--accent-pink);
+  border-radius: 2px;
+}
+
+.regua-gols__viewport:active { cursor: grabbing; }
+
+/* ===== TRACK ===== */
+.regua-gols__track {
+  position: relative;
+}
+
+/* ===== RULER LINE ===== */
+.regua-gols__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border-hover) 3%,
+    var(--border-hover) 97%,
+    transparent 100%
+  );
+}
+
+/* ===== TICKS ===== */
+.regua-gols__tick {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.regua-gols__tick-line {
+  width: 1px;
+  height: 10px;
+  background: var(--border-hover);
+}
+
+.regua-gols__tick-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* ===== BUBBLE ===== */
+.regua-gols__bubble {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  transform: translateX(-50%);
+  z-index: 2;
+  cursor: default;
+  opacity: 0;
+  animation: bubbleIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+/* Photo */
+.regua-gols__photo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #ffffff;
+  transition:
+    border-color var(--duration-fast),
+    transform var(--duration-fast) var(--ease-spring),
+    box-shadow var(--duration-fast);
+}
+
+.regua-gols__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Team styling */
+.regua-gols__bubble--team .regua-gols__photo {
+  width: 40px;
+  height: 40px;
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 8px rgba(233, 30, 140, 0.2);
+}
+
+/* Hover */
+.regua-gols__bubble:hover {
+  z-index: 10;
+}
+
+.regua-gols__bubble:hover .regua-gols__photo {
+  transform: scale(1.12);
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 14px rgba(233, 30, 140, 0.25);
+}
+
+/* Name */
+.regua-gols__name {
+  font-family: var(--font-display);
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  max-width: 56px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  transition: color var(--duration-fast);
+}
+
+.regua-gols__bubble:hover .regua-gols__name {
+  color: var(--text-primary);
+}
+
+/* Goal badge */
+.regua-gols__goals {
+  font-family: var(--font-mono);
+  font-size: 0.4375rem;
+  font-weight: 700;
+  color: var(--accent-pink);
+  background: rgba(233, 30, 140, 0.08);
+  border: 1px solid rgba(233, 30, 140, 0.12);
+  border-radius: 100px;
+  padding: 0 4px;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+/* Empty state */
+.regua-gols__empty {
+  text-align: center;
+  padding: var(--space-xl) 0;
+}
+
+.regua-gols__empty-text {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Entrance */
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateX(-50%) scale(0.5); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+/* Initial letter fallback */
+.regua-gols__photo-initial {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-cyan));
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .regua-gols__photo {
+    width: 30px;
+    height: 30px;
+  }
+
+  .regua-gols__bubble--team .regua-gols__photo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .regua-gols__name {
+    font-size: 0.4375rem;
+    max-width: 48px;
+  }
+
+  .regua-gols__goals {
+    font-size: 0.375rem;
+    padding: 0 3px;
+  }
+}

@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="./css/uniformes.css">
   <link rel="stylesheet" href="./css/galeria.css">
   <link rel="stylesheet" href="./css/estatisticas.css">
+  <link rel="stylesheet" href="./css/patrocinadores.css">
+  <link rel="stylesheet" href="./css/regua-gols.css">
   <link rel="stylesheet" href="./css/animations.css">
 
   <!-- Favicon -->
@@ -73,6 +75,50 @@
       <div class="hero__scroll">
         <div class="hero__scroll-line"></div>
         <span class="hero__scroll-text">Scroll</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PATROCINADORES ===== -->
+  <section class="patrocinadores">
+    <div class="patrocinadores__inner">
+      <div class="patrocinadores__label reveal"><span>Patrocinadores</span></div>
+      <div class="carousel reveal">
+        <button class="carousel__arrow carousel__arrow--prev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="carousel__track">
+          <a href="https://www.instagram.com/abcdentodonto/" target="_blank" rel="noopener" class="carousel__slide">
+            <img class="carousel__logo" src="./assets/logo/patrocinadores/logo abcdent.png" alt="ABC Dentodonto">
+            <span class="carousel__handle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              @abcdentodonto
+            </span>
+          </a>
+          <a href="https://www.instagram.com/onpecautopecas/" target="_blank" rel="noopener" class="carousel__slide">
+            <img class="carousel__logo" src="./assets/logo/patrocinadores/logo onpec.png" alt="On Peças Autopeças">
+            <span class="carousel__handle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              @onpecautopecas
+            </span>
+          </a>
+          <a href="https://www.instagram.com/fyre.oficial/" target="_blank" rel="noopener" class="carousel__slide">
+            <img class="carousel__logo" src="./assets/logo/patrocinadores/logo fyre.png" alt="Fyre">
+            <span class="carousel__handle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              @fyre.oficial
+            </span>
+          </a>
+        </div>
+        <button class="carousel__arrow carousel__arrow--next" aria-label="Próximo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <p class="carousel__cta reveal">Clique para visitar no Instagram</p>
+      <div class="carousel__dots reveal">
+        <button class="carousel__dot active" aria-label="Patrocinador 1"></button>
+        <button class="carousel__dot" aria-label="Patrocinador 2"></button>
+        <button class="carousel__dot" aria-label="Patrocinador 3"></button>
       </div>
     </div>
   </section>
@@ -468,6 +514,22 @@
               </div>
               <canvas id="chart-votos"></canvas>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal Ruler: compare with pros -->
+      <div class="regua-gols reveal" id="regua-gols" style="display:none;">
+        <div class="regua-gols__header">
+          <h3 class="regua-gols__title">Régua de Gols</h3>
+          <p class="regua-gols__desc">Compare os gols do nosso time com jogadores profissionais</p>
+        </div>
+        <div class="regua-gols__hint">
+          <span>Arraste para explorar &rarr;</span>
+        </div>
+        <div class="regua-gols__viewport-wrap">
+          <div class="regua-gols__viewport">
+            <div class="regua-gols__track"></div>
           </div>
         </div>
       </div>

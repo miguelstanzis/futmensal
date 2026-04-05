@@ -1,15 +1,16 @@
 import Chart from 'chart.js/auto';
+import { updateTeamPlayers } from './regua-gols.js';
 
 let chartInstances = {};
 
-export function initEstatisticas(statsData) {
+export function initEstatisticas(statsData, proPlayersData) {
   if (!statsData) return;
 
   initTabs(statsData);
   // Show All Time by default
   renderYear(statsData, 'allTime');
   initBarAnimations();
-  initPlayerLookup(statsData);
+  initPlayerLookup(statsData, proPlayersData);
 
   // Blur current year stats to hide prize data
   const currentYear = String(new Date().getFullYear());
@@ -211,7 +212,7 @@ function mergePlayers(rawPlayers) {
   return result;
 }
 
-function initPlayerLookup(statsData) {
+function initPlayerLookup(statsData, proPlayersData) {
   const rawPlayers = statsData.players;
   if (!rawPlayers) return;
 
@@ -414,9 +415,13 @@ function initPlayerLookup(statsData) {
   }
 
   function update() {
+    const reguaSection = document.getElementById('regua-gols');
+
     if (!currentPlayer1) {
       results.style.display = 'none';
       if (chartModeFloat) chartModeFloat.classList.remove('visible');
+      if (reguaSection) reguaSection.style.display = 'none';
+      updateTeamPlayers([]);
       return;
     }
 
@@ -427,6 +432,19 @@ function initPlayerLookup(statsData) {
     renderPlayerCards(cardsContainer, players, currentPlayer1, currentPlayer2, isCompare, range);
     chartsContainer.style.display = '';
     renderLookupCharts(players, currentPlayer1, currentPlayer2, currentGranularity, currentMode === 'cumulative', range);
+
+    // Update goal ruler with ALL TIME stats (excluding current year, same as rankings)
+    if (reguaSection) reguaSection.style.display = '';
+    const teamForRuler = [];
+    if (currentPlayer1 && players[currentPlayer1]) {
+      const allTimeGols = getPlayerTotals(players[currentPlayer1], CURRENT_YEAR, null);
+      teamForRuler.push({ nome: currentPlayer1, gols: allTimeGols.gols });
+    }
+    if (currentPlayer2 && players[currentPlayer2]) {
+      const allTimeGols = getPlayerTotals(players[currentPlayer2], CURRENT_YEAR, null);
+      teamForRuler.push({ nome: currentPlayer2, gols: allTimeGols.gols });
+    }
+    updateTeamPlayers(teamForRuler);
   }
 
   setupAutocomplete(input1, dropdown1, (name) => {

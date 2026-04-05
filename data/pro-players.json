@@ -1,0 +1,212 @@
+[
+  {
+    "nome": "Pelé",
+    "gols": 775,
+    "foto": "pele.png"
+  },
+  {
+    "nome": "Maradona",
+    "gols": 345,
+    "foto": "maradona.png"
+  },
+  {
+    "nome": "Messi",
+    "gols": 913,
+    "foto": "messi.png"
+  },
+  {
+    "nome": "Cristiano Ronaldo",
+    "gols": 967,
+    "foto": "Cristiano Ronaldo.png"
+  },
+  {
+    "nome": "Ronaldo",
+    "gols": 414,
+    "foto": "ronaldo.png"
+  },
+  {
+    "nome": "Zidane",
+    "gols": 156,
+    "foto": "zidane.png"
+  },
+  {
+    "nome": "Iniesta",
+    "gols": 107,
+    "foto": "iniesta.png"
+  },
+  {
+    "nome": "Xavi",
+    "gols": 125,
+    "foto": "Xavi.png"
+  },
+  {
+    "nome": "Rogério Ceni",
+    "gols": 131,
+    "foto": "Rogério Ceni.png"
+  },
+  {
+    "nome": "Pirlo",
+    "gols": 86,
+    "foto": "pirlo.png"
+  },
+  {
+    "nome": "Lugano",
+    "gols": 49,
+    "foto": "lugano.PNG"
+  },
+  {
+    "nome": "Petkovic",
+    "gols": 216,
+    "foto": "petkovic.PNG"
+  },
+  {
+    "nome": "Leo Moura",
+    "gols": 62,
+    "foto": "leo moura.png"
+  },
+  {
+    "nome": "Diego Souza",
+    "gols": 275,
+    "foto": "diego souza.png"
+  },
+  {
+    "nome": "Alex",
+    "gols": 310,
+    "foto": "alex.png"
+  },
+  {
+    "nome": "Suarez",
+    "gols": 480,
+    "foto": "suarez.png"
+  },
+  {
+    "nome": "Tardelli",
+    "gols": 184,
+    "foto": "tardelli.png"
+  },
+  {
+    "nome": "Paulinho",
+    "gols": 168,
+    "foto": "paulinho.png"
+  },
+  {
+    "nome": "Fred",
+    "gols": 413,
+    "foto": "fred.png"
+  },
+  {
+    "nome": "Marcos Rocha",
+    "gols": 30,
+    "foto": "marcos rocha.png"
+  },
+  {
+    "nome": "Raphael Veiga",
+    "gols": 124,
+    "foto": "raphael veiga.png"
+  },
+  {
+    "nome": "Neymar",
+    "gols": 453,
+    "foto": "neymar.png"
+  },
+  {
+    "nome": "Gabigol",
+    "gols": 272,
+    "foto": "gabigol.png"
+  },
+  {
+    "nome": "Everton Ribeiro",
+    "gols": 139,
+    "foto": "everton ribeiro.png"
+  },
+  {
+    "nome": "Rony",
+    "gols": 125,
+    "foto": "Rony.png"
+  },
+  {
+    "nome": "Ricardo Oliveira",
+    "gols": 363,
+    "foto": "ricardo oliveira.png"
+  },
+  {
+    "nome": "Gabriel Jesus",
+    "gols": 118,
+    "foto": "gabriel jesus.png"
+  },
+  {
+    "nome": "Dudu",
+    "gols": 124,
+    "foto": "dudu.png"
+  },
+  {
+    "nome": "Yago Pikachu",
+    "gols": 166,
+    "foto": "Yago Pikachu.png"
+  },
+  {
+    "nome": "Gustavo Scarpa",
+    "gols": 84,
+    "foto": "Gustavo Scarpa.PNG"
+  },
+  {
+    "nome": "Borges",
+    "gols": 239,
+    "foto": "borges.PNG"
+  },
+  {
+    "nome": "Dagoberto",
+    "gols": 143,
+    "foto": "dagoberto.PNG"
+  },
+  {
+    "nome": "Yuri Alberto",
+    "gols": 120,
+    "foto": "yuri alberto.png"
+  },
+  {
+    "nome": "Depay",
+    "gols": 197,
+    "foto": "depay.PNG"
+  },
+  {
+    "nome": "John Kennedy",
+    "gols": 43,
+    "foto": "John Kennedy.PNG"
+  },
+  {
+    "nome": "Endrick",
+    "gols": 37,
+    "foto": "endrick.png"
+  },
+  {
+    "nome": "Lamine Yamal",
+    "gols": 34,
+    "foto": "Lamine Yamal.PNG"
+  },
+  {
+    "nome": "Luan Garcia",
+    "gols": 24,
+    "foto": "luan garcia.png"
+  },
+  {
+    "nome": "Rafael Toloi",
+    "gols": 43,
+    "foto": "rafael toloi.PNG"
+  },
+  {
+    "nome": "Robson Bambu",
+    "gols": 1,
+    "foto": "robson bambu.PNG"
+  },
+  {
+    "nome": "Speed Mendoza",
+    "gols": 104,
+    "foto": "speed mendoza.PNG"
+  },
+  {
+    "nome": "Paulo Baier",
+    "gols": 170,
+    "foto": "paulo baier.PNG"
+  }
+]

@@ -4,6 +4,8 @@ import { initUniformes } from './uniformes.js';
 import { initGaleria } from './galeria.js';
 import { initEstatisticas, renderAllYears } from './estatisticas.js';
 import { initScrollReveal } from './animations.js';
+import { initPatrocinadores } from './patrocinadores.js';
+import { initReguaGols } from './regua-gols.js';
 
 async function loadJSON(path) {
   try {
@@ -17,20 +19,26 @@ async function loadJSON(path) {
 
 async function init() {
   // Load data
-  const [statsData, galleryData] = await Promise.all([
+  const [statsData, galleryData, proPlayersData] = await Promise.all([
     loadJSON('./data/stats.json'),
     loadJSON('./data/gallery.json'),
+    loadJSON('./data/pro-players.json'),
   ]);
 
   // Init modules
   initNav();
   initHero();
+  initPatrocinadores();
   initUniformes();
   initGaleria(galleryData);
 
   if (statsData) {
     renderAllYears(statsData);
-    initEstatisticas(statsData);
+    initEstatisticas(statsData, proPlayersData);
+  }
+
+  if (proPlayersData) {
+    initReguaGols(proPlayersData);
   }
 
   initScrollReveal();
